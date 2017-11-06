@@ -5,12 +5,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 FIND_PACKAGE(OpenCV REQUIRED)
 
-INCLUDE_DIRECTORIES(${OPENCV_INCLUDE_DIR})
-
-message(STATUS ${OpenCV_INCLUDE_DIR})
-message(STATUS ${OpenCV_LIBS})
-
 SET(SOURCE_FILES
+        tensorflow/c/c_api.h
 #        tensorflow_mtcnn.cpp
         facenet_tf.cpp
         comm_lib.cpp
