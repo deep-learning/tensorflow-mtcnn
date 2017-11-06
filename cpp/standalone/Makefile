@@ -1,9 +1,9 @@
-TF_ROOT=../tf_dist
+# TF_ROOT=../tf_dist
 
-BIN_SRCS=test.cpp  camera.cpp
-COMM_SRCS+=tensorflow_mtcnn.cpp comm_lib.cpp  utils.cpp
+BIN_SRCS=facenet_tf.cpp
 
-
+# BIN_SRCS=test.cpp  camera.cpp facenet_tf.cpp
+# COMM_SRCS+=tensorflow_mtcnn.cpp comm_lib.cpp  utils.cpp
 
 #
 # opencv settings
@@ -21,9 +21,10 @@ LIBS += $(OPENCV_LDFLAGS)
 #
 
 
-TF_INCS += -I$(TF_ROOT)/include
+TF_INCS += -I/usr/include
 CXXFLAGS += $(TF_INCS) 
-LIBS+=-Wl,-rpath,$(TF_ROOT)/lib -L$(TF_ROOT)/lib -ltensorflow
+LIBS+=-Wl,-rpath,/usr/lib -ltensorflow
+# LIBS+=-Wl,-rpath -ltensorflow
 
 
 CXX := g++

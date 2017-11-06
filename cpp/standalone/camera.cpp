@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
 
 		cv::imshow("camera",frame);
 
-		cv::waitKey(1000);
+		cv::waitKey(5);
 	}
 
 	TF_Status* s = TF_NewStatus();
