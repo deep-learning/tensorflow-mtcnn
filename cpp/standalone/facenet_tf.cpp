@@ -85,9 +85,9 @@ static TF_Tensor *boolTensor(bool v) {
     return TF_NewTensor(TF_BOOL, nullptr, 0, values, num_bytes, &BoolDeallocator, nullptr);
 }
 
-float cosine_similarity(const float * const A, const float * const B, unsigned int Vector_Length) {
+float cosine_similarity(const float *const A, const float *const B, unsigned int Vector_Length) {
     float dot = 0.0f, denom_a = 0.0f, denom_b = 0.0f;
-    for (unsigned int i = 0u; i < Vector_Length; ++i) {
+    for (size_t i = 0u; i < Vector_Length; ++i) {
         dot += A[i] * B[i];
         denom_a += A[i] * A[i];
         denom_b += B[i] * B[i];
@@ -95,19 +95,11 @@ float cosine_similarity(const float * const A, const float * const B, unsigned i
     return dot / (sqrt(denom_a) * sqrt(denom_b));
 }
 
-
-int main() {
-    printf("Hello from TensorFlow C library version %s\n", TF_Version());
+const float *get_feature_vector(Mat img_mat) {
     string model_fname = "/home/zhenglai/models/facenet_20170512-110547.pb";
-    string test_img_fname = "/home/zhenglai/repo/tensorflow-mtcnn/cpp/standalone/id0.jpg";
-//    cv::Mat img_mat = cv::imread(test_img_fname.c_str(), IMREAD_COLOR);
-
-    Mat img_mat = Mat(160, 160, CV_8UC3);
-    randu(img_mat, Scalar::all(0), Scalar::all(255));
-
     if (!img_mat.data) {
-        std::cerr << "failed to read image file: " << test_img_fname << std::endl;
-        return 1;
+        std::cerr << "img_mat invalid" << endl;
+        return nullptr;
     }
     cout << img_mat.cols << endl;
     cout << img_mat.channels() << endl;
@@ -117,10 +109,19 @@ int main() {
     cv::resize(img_mat, img_mat, cv::Size(scale_w, scale_h), 0, 0);
     dump_mat(img_mat);
     img_mat.convertTo(img_mat, CV_32FC3);
-    cout << img_mat.at<float>(10, 10) << endl;
-    dump_mat(img_mat);
 
-    /* tensorflow related*/
+    Mat mat(scale_w, scale_h, CV_32FC3);
+
+    Scalar mean, stddev;
+    meanStdDev(img_mat, mean, stddev);
+    cout << "mean=" << mean[0] << ", stddev=" << stddev[0] << endl;
+    mat.setTo(mean);
+    mat = img_mat - mat;
+    mat.convertTo(mat, CV_32FC3, 1 / stddev[0]);
+
+    cout << "val=" << mat.at<float>(12, 12) << endl;
+    dump_mat(mat);
+
 
     TF_Session *sess = nullptr;
     TF_Graph *graph = nullptr;
@@ -147,7 +148,7 @@ int main() {
     TF_Tensor *input_tensor = TF_NewTensor(TF_FLOAT,
                                            dim,
                                            4,
-                                           img_mat.ptr(),
+                                           mat.ptr(),
                                            sizeof(float) * scale_w * scale_h * 3,
                                            dummy_deallocator,
                                            nullptr);
@@ -182,15 +183,22 @@ int main() {
 
     const float *fvector = (const float *) TF_TensorData(output_values[0]);
 
-//    for (size_t i = 0; i < 128; ++i) {
-//        cout << fvector[i] << ',';
-//    }
-
-    cout << cosine_similarity(fvector, fvector, 128) << endl;
-
-
     TF_CloseSession(sess, s);
     TF_DeleteSession(sess, s);
     TF_DeleteGraph(graph);
     TF_DeleteStatus(s);
+    return fvector;
+}
+
+int main(int argc, char **argv) {
+    const float *fa = get_feature_vector(imread(argv[1]));
+    const float *fb = get_feature_vector(imread(argv[2]));
+//    cv::Mat img_mat = cv::imread(test_img_fname.c_str(), IMREAD_COLOR);
+    cout << "calculating" << endl;
+    cout << cosine_similarity(fa, fb, 128) << endl;
+
+//    Mat img_mat = Mat(160, 160, CV_8UC3);
+//    randu(img_mat, Scalar::all(0), Scalar::all(255));
+
+
 }

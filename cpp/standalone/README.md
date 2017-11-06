@@ -1,3 +1,10 @@
+# TEMP
+
+```bash 
+make && ./facenet_tf Arnold_Palmer_0001_0.jpg Arnold_Palmer_0002_0.jpg
+```
+
+
 # MTCNN Tensorflow C++ Implementation
 
 This is a project to implement MTCNN, a perfect face detect algorithm, based on Tensorflow
