@@ -60,8 +60,9 @@ const float *get_feature_vector(Mat img_mat) {
 
     TF_Session *sess = nullptr;
     TF_Graph *graph = nullptr;
-    sess = tf_load_graph(model_fname.c_str(), &graph);
+
     TF_Status *s = TF_NewStatus();
+    sess = tf_load_graph(model_fname.c_str(), &graph, s);
 
     assert(sess != nullptr);
     assert(graph != nullptr);

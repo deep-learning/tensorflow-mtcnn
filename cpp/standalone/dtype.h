@@ -7,7 +7,7 @@
 
 #include <stdint-gcc.h>
 
-enum ColorSpaceType {
+enum ImageMode {
     RGB,
     YUV
 };

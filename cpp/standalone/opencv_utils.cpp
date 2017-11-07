@@ -4,7 +4,7 @@
 using namespace cv;
 
 // todo: optimize this..
-cv::Mat rgb_mat_from(uchar *img_data, int width, int height, ColorSpaceType colorSpaceType) {
+cv::Mat rgb_mat_from(uchar *const img_data, int width, int height, ImageMode colorSpaceType) {
     switch (colorSpaceType) {
         case RGB: {
             Mat mat(height, width, CV_8UC3, img_data);

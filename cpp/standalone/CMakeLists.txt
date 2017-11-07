@@ -6,7 +6,10 @@ set(CMAKE_CXX_STANDARD 14)
 FIND_PACKAGE(OpenCV REQUIRED)
 
 SET(SOURCE_FILES
+        mtcnn.hpp
+        camera.cpp
         test.cpp
+
         tensorflow/c/c_api.h
         tensorflow_mtcnn.cpp
 #        facenet_tf.cpp
@@ -18,7 +21,7 @@ SET(SOURCE_FILES
         dtype.h
         opencv_utils.h
         opencv_utils.cpp
-        tf_utils.h)
+        tf_utils.h tf_mtcnn.cpp tf_mtcnn.h)
 
 add_executable(bioack ${SOURCE_FILES})
 target_link_libraries(bioack tensorflow ${OpenCV_LIBS})

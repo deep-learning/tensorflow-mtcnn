@@ -8,7 +8,7 @@
 #include <opencv2/core.hpp>
 #include "dtype.h"
 
-cv::Mat rgb_mat_from(uchar *img_data, int width, int height, ColorSpaceType colorSpaceType);
+cv::Mat rgb_mat_from(uchar *img_data, int width, int height, ImageMode colorSpaceType);
 
 void resize_mat_in_place(cv::Mat &mat, double scale_factor);
 

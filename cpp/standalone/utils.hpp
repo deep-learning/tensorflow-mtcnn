@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-int load_file2(const std::string &fname, std::vector<char> &buf);
+int load_file(const std::string &fname, std::vector<char> &buf);
 
 /* get current time: in us */
 unsigned long now(void);

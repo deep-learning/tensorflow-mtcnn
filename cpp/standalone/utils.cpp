@@ -8,7 +8,7 @@
 
 #include <sys/time.h>
 
-int load_file2(const std::string &fname, std::vector<char> &buf) {
+int load_file(const std::string &fname, std::vector<char> &buf) {
     std::ifstream fs(fname, std::ios::binary | std::ios::in);
     if (!fs.good()) {
         std::cerr << fname << " does not exist" << std::endl;
