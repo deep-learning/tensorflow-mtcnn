@@ -20,5 +20,7 @@ void save_img(const char *name, void *p_img);
 void save_float(const char *name, const float *data, int size);
 
 
+float cosine_similarity(const float *A, const float *B, size_t Vector_Length);
+
 #endif
 

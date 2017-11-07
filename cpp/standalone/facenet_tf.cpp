@@ -1,46 +1,17 @@
 #include "facenet_tf.h"
-#include "utils.hpp"
 #include "tensorflow/c/c_api.h"
+#include "tf_utils.h"
 
 
 const int scale_h = 160;
 const int scale_w = 160;
 
-static void dummy_deallocator(void *data, size_t len, void *arg) {}
 
 string input_layer = "input";
 string phase_train_layer = "phase_train";
 string output_layer = "embeddings";
 
 
-TF_Session *load_graph2(const char *frozen_fname, TF_Graph **p_graph) {
-    TF_Status *s = TF_NewStatus();
-    TF_Graph *graph = TF_NewGraph();
-    std::vector<char> model_buf;
-    load_file2(frozen_fname, model_buf);
-    TF_Buffer graph_def = {model_buf.data(), model_buf.size(), nullptr};
-    TF_ImportGraphDefOptions *import_opts = TF_NewImportGraphDefOptions();
-    TF_ImportGraphDefOptionsSetPrefix(import_opts, "");
-    TF_GraphImportGraphDef(graph, &graph_def, import_opts, s);
-
-    if (TF_GetCode(s) != TF_OK) {
-        printf("load graph failed!\n Error: %s\n", TF_Message(s));
-
-        return nullptr;
-    }
-
-    TF_SessionOptions *sess_opts = TF_NewSessionOptions();
-    TF_Session *session = TF_NewSession(graph, sess_opts, s);
-    assert(TF_GetCode(s) == TF_OK);
-
-
-    TF_DeleteStatus(s);
-
-
-    *p_graph = graph;
-
-    return session;
-}
 
 void dump_mat(Mat mat) {
     std::cout << "(" << mat.cols << ", " << mat.rows << ", " << mat.channels() << ")" << endl;
@@ -58,15 +29,6 @@ static TF_Tensor *boolTensor(bool v) {
     return TF_NewTensor(TF_BOOL, nullptr, 0, values, num_bytes, &BoolDeallocator, nullptr);
 }
 
-float cosine_similarity(const float *const A, const float *const B, unsigned int Vector_Length) {
-    float dot = 0.0f, denom_a = 0.0f, denom_b = 0.0f;
-    for (size_t i = 0u; i < Vector_Length; ++i) {
-        dot += A[i] * B[i];
-        denom_a += A[i] * A[i];
-        denom_b += B[i] * B[i];
-    }
-    return dot / (sqrt(denom_a) * sqrt(denom_b));
-}
 
 const float *get_feature_vector(Mat img_mat) {
     string model_fname = "/home/zhenglai/models/facenet_20170512-110547.pb";
@@ -98,7 +60,7 @@ const float *get_feature_vector(Mat img_mat) {
 
     TF_Session *sess = nullptr;
     TF_Graph *graph = nullptr;
-    sess = load_graph2(model_fname.c_str(), &graph);
+    sess = tf_load_graph(model_fname.c_str(), &graph);
     TF_Status *s = TF_NewStatus();
 
     assert(sess != nullptr);
@@ -113,8 +75,8 @@ const float *get_feature_vector(Mat img_mat) {
     assert(input_name != nullptr);
     assert(phase_train != nullptr);
 
-    input_names.push_back({phase_train, 0});
     input_names.push_back({input_name, 0});
+    input_names.push_back({phase_train, 0});
 
     const int64_t dim[4] = {1, scale_h, scale_w, 3};
 
@@ -129,8 +91,8 @@ const float *get_feature_vector(Mat img_mat) {
 
     TF_Tensor *phase_train_tensor = boolTensor(false);
 
-    input_values.push_back(phase_train_tensor);
     input_values.push_back(input_tensor);
+    input_values.push_back(phase_train_tensor);
 
     std::vector<TF_Output> output_names;
 

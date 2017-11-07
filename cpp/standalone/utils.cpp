@@ -27,12 +27,19 @@ int load_file2(const std::string &fname, std::vector<char> &buf) {
 unsigned long now(void) {
     struct timeval tv;
     unsigned long ts;
-
     gettimeofday(&tv, NULL);
-
     ts = tv.tv_sec * 1000000 + tv.tv_usec;
-
     return ts;
+}
+
+float cosine_similarity(const float *const A, const float *const B, size_t Vector_Length) {
+    float dot = 0.0F, denom_a = 0.0F, denom_b = 0.0F;
+    for (size_t i = 0u; i < Vector_Length; ++i) {
+        dot += A[i] * B[i];
+        denom_a += A[i] * A[i];
+        denom_b += B[i] * B[i];
+    }
+    return dot / (sqrt(denom_a) * sqrt(denom_b));
 }
 
 void save_float(const char *name, const float *data, int size) {

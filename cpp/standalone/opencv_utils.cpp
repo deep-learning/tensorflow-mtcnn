@@ -1,7 +1,3 @@
-//
-// Created by zhenglai on 17-11-7.
-//
-
 #include <opencv2/imgproc.hpp>
 #include "opencv_utils.h"
 
@@ -23,6 +19,25 @@ cv::Mat rgb_mat_from(uchar *img_data, int width, int height, ColorSpaceType colo
             return std::move(rgbMat);
         }
     }
+}
 
+void resize_mat_in_place(cv::Mat &mat, double scale_factor) {
+    if (scale_factor > 1.0) { // todo float arith ops.
+        cv::resize(mat, mat, cv::Size(), scale_factor, scale_factor, cv::INTER_AREA);
+    } else if (scale_factor < 1.0) {
+#ifdef FAST
+        cv::resize(mat, mat, cv::Size(), scale_factor, scale_factor, cv::INTER_LINEAR);
+#else
+        cv::resize(mat, mat, cv::Size(), scale_factor, scale_factor, cv::INTER_CUBIC);
+#endif
+    } else {
+        // ignore, do nothing
+    }
+}
+
+cv::Mat resize_mat(const cv::Mat &mat, double scale_factor) {
+    Mat ret = mat.clone();
+    resize_mat_in_place(ret, scale_factor);
+    return ret;
 }
 
