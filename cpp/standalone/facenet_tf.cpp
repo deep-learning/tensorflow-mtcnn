@@ -1,4 +1,5 @@
 #include "facenet_tf.h"
+#include "utils.hpp"
 #include "tensorflow/c/c_api.h"
 
 
@@ -12,40 +13,12 @@ string phase_train_layer = "phase_train";
 string output_layer = "embeddings";
 
 
-static int load_file2(const std::string &fname, std::vector<char> &buf) {
-    std::ifstream fs(fname, std::ios::binary | std::ios::in);
-
-    if (!fs.good()) {
-        std::cerr << fname << " does not exist" << std::endl;
-        return -1;
-    }
-
-
-    fs.seekg(0, std::ios::end);
-    int fsize = fs.tellg();
-
-    fs.seekg(0, std::ios::beg);
-    buf.resize(fsize);
-    fs.read(buf.data(), fsize);
-
-    fs.close();
-
-    return 0;
-
-}
-
-
 TF_Session *load_graph2(const char *frozen_fname, TF_Graph **p_graph) {
     TF_Status *s = TF_NewStatus();
-
     TF_Graph *graph = TF_NewGraph();
-
     std::vector<char> model_buf;
-
     load_file2(frozen_fname, model_buf);
-
     TF_Buffer graph_def = {model_buf.data(), model_buf.size(), nullptr};
-
     TF_ImportGraphDefOptions *import_opts = TF_NewImportGraphDefOptions();
     TF_ImportGraphDefOptionsSetPrefix(import_opts, "");
     TF_GraphImportGraphDef(graph, &graph_def, import_opts, s);

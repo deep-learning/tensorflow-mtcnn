@@ -12,7 +12,7 @@ SET(SOURCE_FILES
         comm_lib.cpp
         utils.cpp
 #        camera.cpp
-        )
+        facenet.cpp facenet.h dtype.h opencv_utils.h opencv_utils.cpp)
 
 add_executable(bioack ${SOURCE_FILES})
 target_link_libraries(bioack tensorflow ${OpenCV_LIBS})
