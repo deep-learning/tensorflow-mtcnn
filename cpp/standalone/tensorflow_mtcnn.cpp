@@ -2,7 +2,7 @@
 #include <utility>
 #include <vector>
 #include <assert.h>
-#include <stdio.h>
+#include <utility>
 
 #include "tensorflow/c/c_api.h"
 
@@ -463,13 +463,10 @@ void mtcnn_detect(TF_Session *sess, TF_Graph *graph, const cv::Mat &img, std::ve
     nms_boxes(total_onet_boxes, 0.7, NMS_MIN, face_list);
 
     //switch x and y, since working_img is transposed
-
     for (unsigned int i = 0; i < face_list.size(); i++) {
         face_box &box = face_list[i];
-
         std::swap(box.x0, box.y0);
         std::swap(box.x1, box.y1);
-
         for (int l = 0; l < 5; l++) {
             std::swap(box.landmark.x[l], box.landmark.y[l]);
         }

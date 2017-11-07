@@ -10,6 +10,7 @@
 #include "utils.hpp"
 #include "comm_lib.hpp"
 #include "tf_utils.h"
+#include "tf_mtcnn.h"
 
 #include <unistd.h>
 
@@ -41,14 +42,14 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    TF_Session *sess;
-    TF_Graph *graph;
-    TF_Status *status = TF_NewStatus();
-
-    sess = tf_load_graph(model_fname.c_str(), &graph, status);
-
-    if (sess == nullptr)
-        return 1;
+//    TF_Session *sess;
+//    TF_Graph *graph;
+//    TF_Status *status = TF_NewStatus();
+//
+//    sess = tf_load_graph(model_fname.c_str(), &graph, status);
+//
+//    if (sess == nullptr)
+//        return 1;
 
     //Load image
 
@@ -59,14 +60,16 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    std::vector<face_box> face_info;
 
-    unsigned long start_time = now();
+    mtcnn *detector = new mtcnn(model_fname.c_str());
 
-    mtcnn_detect(sess, graph, frame, face_info);
+//    unsigned long start_time = now();
 
-    unsigned long end_time = now();
+//    mtcnn_detect(sess, graph, frame, face_info);
 
+//    unsigned long end_time = now();
+
+    std::vector<face_box> face_info = detector->detect(frame);
 
     for (int i = 0; i < face_info.size(); i++) {
         face_box &box = face_info[i];
@@ -108,16 +111,14 @@ int main(int argc, char *argv[]) {
 
     cv::imwrite(output_fname, frame);
 
-    std::cout << "total detected: " << face_info.size() << " faces. used " << (end_time - start_time) << " us"
-              << std::endl;
     std::cout << "boxed faces are in file: " << output_fname << std::endl;
 
-    TF_Status *s = TF_NewStatus();
-
-    TF_CloseSession(sess, s);
-    TF_DeleteSession(sess, s);
-    TF_DeleteGraph(graph);
-    TF_DeleteStatus(s);
+//    TF_Status *s = TF_NewStatus();
+//
+//    TF_CloseSession(sess, s);
+//    TF_DeleteSession(sess, s);
+//    TF_DeleteGraph(graph);
+//    TF_DeleteStatus(s);
 
     return 0;
 }

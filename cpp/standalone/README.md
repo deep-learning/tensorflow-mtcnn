@@ -1,6 +1,10 @@
 # TEMP
 
 ```bash 
+# test mtcnn
+./test test.jpg -o /tmp/test_out.jpg -m models/mtcnn_frozen_model.pb -s
+
+# test facenet
 make && ./facenet_tf Arnold_Palmer_0001_0.jpg Arnold_Palmer_0002_0.jpg
 ```
 
