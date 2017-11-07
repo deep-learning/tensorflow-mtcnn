@@ -1,10 +1,10 @@
 # TF_ROOT=../tf_dist
 
-BIN_SRCS=facenet_tf.cpp
-COMM_SRCS+=utils.cpp
+#BIN_SRCS=facenet_tf.cpp
+#COMM_SRCS+=utils.cpp
 
-# BIN_SRCS=test.cpp  camera.cpp facenet_tf.cpp
-# COMM_SRCS+=tensorflow_mtcnn.cpp comm_lib.cpp  utils.cpp
+BIN_SRCS=test.cpp  camera.cpp facenet_tf.cpp
+COMM_SRCS+=tensorflow_mtcnn.cpp comm_lib.cpp  utils.cpp
 
 #
 # opencv settings

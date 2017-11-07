@@ -82,11 +82,11 @@ int main(int argc, char* argv[])
 
 		std::vector<face_box> face_info;
 
-		unsigned long start_time=get_cur_time();
+		unsigned long start_time=now();
 
 		mtcnn_detect(sess,graph,frame,face_info);
 
-		unsigned long end_time=get_cur_time();
+		unsigned long end_time=now();
 
 
 
