@@ -17,7 +17,7 @@
 using std::string;
 
 int main(int argc, char *argv[]) {
-    string image = "./test.jpg";
+    string image = "./imgs/test.jpg";
     string model_fname = "./models/mtcnn_frozen_model.pb";
     string output_fname = "./new.jpg";
     int save_chop = 0;
