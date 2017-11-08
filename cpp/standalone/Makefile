@@ -31,12 +31,10 @@ $(BIN_EXES) : $(COMM_OBJS)
 $(BIN_EXES):%:%.o
 %:%.o
 	$(CXX) $< -o $@ $(LDFLAGS) $(COMM_OBJS) $(LIBS)
+#	$(CXX) $< -o libbioack.so $(LDFLAGS) $(SO_FLAGS) $(COMM_OBJS) $(LIBS)
 
 %.o : %.cpp 
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-shared:
-
 
 release:
 	echo "relaase..."

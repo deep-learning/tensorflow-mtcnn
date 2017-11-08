@@ -6,16 +6,15 @@ set(CMAKE_CXX_STANDARD 14)
 set(TF_ROOT ./tf140)
 set(OPENCV_ROOT ./opencv330)
 
-FIND_PACKAGE(OpenCV REQUIRED)
+INCLUDE_DIRECTORIES(${TF_ROOT}/include ${OPENCV_ROOT}/include)
+LINK_DIRECTORIES(${TF_ROOT}/lib ${OPENCV_ROOT}/lib)
 
 SET(SOURCE_FILES
         mtcnn.hpp
-        camera.cpp
+#        camera.cpp
         test.cpp
-
-        tensorflow/c/c_api.h
         tensorflow_mtcnn.cpp
-#        facenet_tf.cpp
+        #        facenet_tf.cpp
         comm_lib.cpp
         utils.cpp
         #        camera.cpp
@@ -27,4 +26,4 @@ SET(SOURCE_FILES
         tf_utils.h tf_mtcnn.cpp tf_mtcnn.h jni_types.hpp jni_common.cpp jni_common.hpp)
 
 add_executable(bioack ${SOURCE_FILES})
-target_link_libraries(bioack tensorflow ${OpenCV_LIBS})
+target_link_libraries(bioack tensorflow opencv_core opencv_imgcodecs opencv_imgproc)
