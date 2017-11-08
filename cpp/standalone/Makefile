@@ -4,7 +4,8 @@
 #COMM_SRCS+=utils.cpp
 
 BIN_SRCS=test.cpp  facenet_tf.cpp # camera.cpp
-COMM_SRCS+=tensorflow_mtcnn.cpp comm_lib.cpp  utils.cpp tf_mtcnn.cpp opencv_utils.cpp
+JNI_SRCS=jni_types.hpp jni_common.cpp
+COMM_SRCS+=tensorflow_mtcnn.cpp comm_lib.cpp  utils.cpp tf_mtcnn.cpp opencv_utils.cpp $(JNI_SRCS)
 
 #
 # opencv settings

@@ -5,6 +5,8 @@
 #include <cassert>
 #include "utils.hpp"
 
+template<size_t SIZE, class T>
+inline size_t array_size(T (&arr)[SIZE]) { return SIZE; }
 
 static void dummy_deallocator(void * /*data*/, size_t /*len*/, void * /*arg*/) {}
 

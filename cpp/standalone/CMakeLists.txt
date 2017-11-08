@@ -21,7 +21,7 @@ SET(SOURCE_FILES
         dtype.h
         opencv_utils.h
         opencv_utils.cpp
-        tf_utils.h tf_mtcnn.cpp tf_mtcnn.h)
+        tf_utils.h tf_mtcnn.cpp tf_mtcnn.h jni_types.hpp jni_common.cpp jni_common.hpp)
 
 add_executable(bioack ${SOURCE_FILES})
 target_link_libraries(bioack tensorflow ${OpenCV_LIBS})
