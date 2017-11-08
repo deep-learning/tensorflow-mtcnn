@@ -2,35 +2,39 @@
 #include <algorithm>
 #include "jni_types.hpp"
 #include "jni_common.hpp"
+#include "tf_mtcnn.hpp"
 
 using namespace std;
 
 FaceDetector::FaceDetector(const char *const model_path) {
-    this->handle = 1200;
+    auto *ptr = new mtcnn(model_path);
+    this->handle = reinterpret_cast<long>(ptr);
 }
 
 void FaceDetector::release() {
-    this->handle = 0L;
+    auto *ptr = reinterpret_cast<mtcnn *>(this->handle);
+    ptr->release();
 }
 
-Face FaceDetector::detect(uchar *img_data, int width, int height, ImageMode img_mode) {
-    Point dummy_point = {140, 140};
-    std::vector<Point> landmarks(6);
-    for (int i = 0; i < landmarks.size(); ++i) {
-        landmarks[i] = dummy_point;
-    }
-//    std::fill_n(landmarks.begin(), landmarks.end(), dummy_point);
-    Face dummy_face = {
-            .rect = {
-                    .x = {100, 100},
-                    .width = 200,
-                    .height = 300
-            },
-            .landmarks = landmarks,
-            .confidence = 0.82f
-    };
+vector<Face> FaceDetector::detect(uchar *img_data, int width, int height, ImageMode img_mode) {
+    auto *ptr = reinterpret_cast<mtcnn *>(this->handle);
+    auto faces = ptr->detect(img_data, width, height, img_mode);
+    vector<Face> result(faces.size());
+    for (auto &face: faces) {
+        Face f{};
+        f.rect = {
+                .org = {static_cast<int>(face.x0), static_cast<int>(face.y0)},
+                .width = static_cast<int>(face.x1 - face.x0),
+                .height = static_cast<int>(face.y1 - face.y0)
+        };
+        for (int i = 0; i < BA_LANDMARK_TOTAL; ++i) {
+            f.landmarks[i] = Point {static_cast<int>(face.landmark.x[i]), static_cast<int>(face.landmark.y[i])};
+        }
+        f.confidence = face.score;
 
-    return dummy_face;
+        result.push_back(f);
+    }
+    return std::move(result);
 }
 
 

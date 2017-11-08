@@ -90,9 +90,7 @@ int main(int argc, char *argv[]) {
                                      cv::Range(box.x0, box.x1));
 
             char title[128];
-
-            sprintf(title, "id%d.jpg", i);
-
+            sprintf(title, "/tmp/id%d.jpg", i);
             cv::imwrite(title, corp_img);
         }
 

@@ -5,9 +5,6 @@
 #include <cassert>
 #include "utils.hpp"
 
-template<size_t SIZE, class T>
-inline size_t array_size(T (&arr)[SIZE]) { return SIZE; }
-
 static void dummy_deallocator(void * /*data*/, size_t /*len*/, void * /*arg*/) {}
 
 static TF_Session *tf_load_graph(const char *model_fname, TF_Graph **p_graph, TF_Status *status) {

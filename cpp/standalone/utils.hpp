@@ -22,5 +22,8 @@ void save_float(const char *name, const float *data, int size);
 
 float cosine_similarity(const float *A, const float *B, size_t Vector_Length);
 
+template<size_t SIZE, class T>
+inline size_t array_size(T (&arr)[SIZE]) { return SIZE; }
+
 #endif
 

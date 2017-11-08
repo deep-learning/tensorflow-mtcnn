@@ -1,7 +1,7 @@
 TF_ROOT=./tf140
 OPENCV_ROOT=./opencv330
 
-BIN_SRCS=test.cpp  tf_facenet.cpp # camera.cpp
+BIN_SRCS=testjni.cpp # test.cpp  tf_facenet.cpp # camera.cpp
 JNI_SRCS=jni_types.hpp jni_common.cpp
 COMM_SRCS+=tensorflow_mtcnn.cpp comm_lib.cpp  utils.cpp tf_mtcnn.cpp opencv_utils.cpp $(JNI_SRCS)
 DEPS=$(wildcard *.c)

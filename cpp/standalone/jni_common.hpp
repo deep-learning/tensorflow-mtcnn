@@ -6,13 +6,13 @@
 
 class FaceDetector {
 public:
-    FaceDetector(const char *const model_path);
+    FaceDetector(const char *model_path);
 
     ~FaceDetector() { this->release(); }
 
     void release();
 
-    Face detect(uchar *img_data, int width, int height, ImageMode imageMode);
+    std::vector<Face> detect(uchar *img_data, int width, int height, ImageMode imageMode);
 
 private:
     long handle;
