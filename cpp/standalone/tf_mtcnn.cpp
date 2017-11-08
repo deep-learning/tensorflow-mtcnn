@@ -2,11 +2,11 @@
 // Created by zhenglai on 17-11-7.
 //
 
-#include "tf_mtcnn.h"
-#include "tf_utils.h"
+#include "tf_mtcnn.hpp"
+#include "tf_utils.hpp"
 #include "tensorflow_mtcnn.hpp"
 #include "tensorflow/c/c_api.h"
-#include "opencv_utils.h"
+#include "opencv_utils.hpp"
 
 using namespace std;
 using namespace cv;

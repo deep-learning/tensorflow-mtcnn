@@ -1,6 +1,6 @@
-#include "facenet_tf.h"
+#include "tf_facenet.hpp"
 #include "tensorflow/c/c_api.h"
-#include "tf_utils.h"
+#include "tf_utils.hpp"
 
 
 const int scale_h = 160;

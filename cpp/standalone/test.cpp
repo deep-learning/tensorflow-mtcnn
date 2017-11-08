@@ -9,8 +9,8 @@
 #include "mtcnn.hpp"
 #include "utils.hpp"
 #include "comm_lib.hpp"
-#include "tf_utils.h"
-#include "tf_mtcnn.h"
+#include "tf_utils.hpp"
+#include "tf_mtcnn.hpp"
 
 #include <unistd.h>
 

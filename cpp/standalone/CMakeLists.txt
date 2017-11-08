@@ -18,12 +18,9 @@ SET(SOURCE_FILES
         comm_lib.cpp
         utils.cpp
         #        camera.cpp
-        facenet.cpp
-        facenet.h
-        dtype.h
-        opencv_utils.h
+        opencv_utils.hpp
         opencv_utils.cpp
-        tf_utils.h tf_mtcnn.cpp tf_mtcnn.h jni_types.hpp jni_common.cpp jni_common.hpp)
+        tf_utils.hpp tf_mtcnn.cpp tf_mtcnn.hpp jni_types.hpp jni_common.cpp jni_common.hpp)
 
 add_executable(bioack ${SOURCE_FILES})
 target_link_libraries(bioack tensorflow opencv_core opencv_imgcodecs opencv_imgproc)

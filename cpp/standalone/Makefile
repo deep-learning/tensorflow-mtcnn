@@ -1,7 +1,7 @@
 TF_ROOT=./tf140
 OPENCV_ROOT=./opencv330
 
-BIN_SRCS=test.cpp  facenet_tf.cpp # camera.cpp
+BIN_SRCS=test.cpp  tf_facenet.cpp # camera.cpp
 JNI_SRCS=jni_types.hpp jni_common.cpp
 COMM_SRCS+=tensorflow_mtcnn.cpp comm_lib.cpp  utils.cpp tf_mtcnn.cpp opencv_utils.cpp $(JNI_SRCS)
 DEPS=$(wildcard *.c)
@@ -40,7 +40,7 @@ release:
 	echo "relaase..."
 
 clean:
-	rm -f $(BIN_EXES) *.o
+	rm -f $(BIN_EXES) *.o *.so
 
 .PHONY : all clean
 

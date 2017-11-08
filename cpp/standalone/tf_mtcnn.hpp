@@ -10,7 +10,7 @@
 
 #include "tensorflow/c/c_api.h"
 #include "mtcnn.hpp"
-#include "dtype.h"
+#include "jni_types.hpp"
 
 class mtcnn {
 public:

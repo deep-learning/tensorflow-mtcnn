@@ -6,7 +6,7 @@
 #define BIOACK_OPENCV_UTILS_H
 
 #include <opencv2/core.hpp>
-#include "dtype.h"
+#include "jni_types.hpp"
 
 cv::Mat rgb_mat_from(uchar *img_data, int width, int height, ImageMode colorSpaceType);
 

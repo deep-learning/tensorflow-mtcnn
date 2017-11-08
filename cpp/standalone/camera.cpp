@@ -6,7 +6,7 @@
 #include "tensorflow/c/c_api.h"
 #include "tensorflow_mtcnn.hpp"
 #include "utils.hpp"
-#include "tf_utils.h"
+#include "tf_utils.hpp"
 
 using std::string;
 
