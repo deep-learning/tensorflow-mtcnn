@@ -6,7 +6,7 @@
 #define BIOACK_TF_MTCNN_H
 
 #include <string>
-#include <opencv2/core.hpp>
+#include "opencv2/core.hpp"
 
 #include "tensorflow/c/c_api.h"
 #include "mtcnn.hpp"
