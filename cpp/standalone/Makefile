@@ -30,7 +30,7 @@ LIBS+=-Wl,-rpath,/usr/lib -ltensorflow
 
 CXX := g++
 CXXFLAGS+= -Wall -Wextra -ggdb -std=c++14
-LDFLAGS = -static
+# LDFLAGS = -static
 
 COMM_OBJS=$(COMM_SRCS:.cpp=.o)
 BIN_OBJS=$(BIN_SRCS:.cpp=.o)
