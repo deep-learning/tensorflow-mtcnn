@@ -9,7 +9,7 @@ using namespace cv;
 int main() {
     const char *img_fname = "./imgs/test.jpg";
     const char *model_fname = "./models/mtcnn_frozen_model.pb";
-    const char *output_fname = "./new.jpg";
+    const char *output_fname = "./tmp/test_new.jpg";
     cv::Mat frame = cv::imread(img_fname);
 
     if (!frame.data) {
